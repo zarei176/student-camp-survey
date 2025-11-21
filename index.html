@@ -1035,6 +1035,7 @@
             if (username === 'admin' && password === 'campsurvey2025') {
                 document.getElementById('adminLogin').style.display = 'none';
                 document.getElementById('adminDashboard').style.display = 'block';
+                document.querySelector('.admin-panel').style.display = 'block';
                 loadDashboardData();
             } else {
                 alert('نام کاربری یا رمز عبور اشتباه است');
@@ -1210,6 +1211,7 @@
             document.getElementById('adminLogin').style.display = 'block';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
+            document.querySelector('.admin-panel').style.display = 'none';
         }
 
         // Initialize the application
