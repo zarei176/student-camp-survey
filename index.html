@@ -884,6 +884,18 @@
                     <div class="stat-number" id="repeatWish">0%</div>
                     <div class="stat-label">تمایل به تکرار</div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="foodSatisfaction">0%</div>
+                    <div class="stat-label">رضایت از غذا و پذیرایی</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="staySatisfaction">0%</div>
+                    <div class="stat-label">رضایت از اقامت</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="staffSatisfaction">0%</div>
+                    <div class="stat-label">رضایت از مسئولان اردو</div>
+                </div>
             </div>
 
             <div class="charts-container">
@@ -902,6 +914,18 @@
                 <div class="chart-card">
                     <h3 class="chart-title">جذابیت کلاس اخترشناسی</h3>
                     <canvas id="astronomyChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">رضایت از غذا و پذیرایی</h3>
+                    <canvas id="foodChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">رضایت از اقامت</h3>
+                    <canvas id="stayChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">رضایت از مسئولان اردو</h3>
+                    <canvas id="staffChart"></canvas>
                 </div>
             </div>
 
@@ -1083,6 +1107,27 @@
                 // Repeat wish percentage
                 const repeatWish = responses.filter(r => r.q8 === 'حتماً' || r.q8 === 'دوست دارم').length;
                 document.getElementById('repeatWish').textContent = Math.round((repeatWish / total) * 100) + '%';
+
+                // Additional satisfaction statistics
+                const positiveLevels = ['کاملاً راضی', 'راضی'];
+
+                const foodStatElement = document.getElementById('foodSatisfaction');
+                if (foodStatElement) {
+                    const foodPositive = responses.filter(r => positiveLevels.includes(r.q5)).length;
+                    foodStatElement.textContent = Math.round((foodPositive / total) * 100) + '%';
+                }
+
+                const stayStatElement = document.getElementById('staySatisfaction');
+                if (stayStatElement) {
+                    const stayPositive = responses.filter(r => positiveLevels.includes(r.q6)).length;
+                    stayStatElement.textContent = Math.round((stayPositive / total) * 100) + '%';
+                }
+
+                const staffStatElement = document.getElementById('staffSatisfaction');
+                if (staffStatElement) {
+                    const staffPositive = responses.filter(r => positiveLevels.includes(r.q7)).length;
+                    staffStatElement.textContent = Math.round((staffPositive / total) * 100) + '%';
+                }
             }
         }
 
@@ -1107,6 +1152,21 @@
             createPieChart('astronomyChart', responses, 'q4',
                 ['خیلی جذاب', 'جذاب', 'متوسط', 'خسته‌کننده'],
                 ['#4facfe', '#00f2fe', '#ffd89b', '#ff6b6b']);
+
+            // Food satisfaction chart
+            createPieChart('foodChart', responses, 'q5',
+                ['کاملاً راضی', 'راضی', 'نسبتاً راضی', 'راضی نبودم'],
+                ['#2ecc71', '#1abc9c', '#f1c40f', '#e74c3c']);
+
+            // Stay satisfaction chart
+            createPieChart('stayChart', responses, 'q6',
+                ['کاملاً راضی', 'راضی', 'نسبتاً راضی', 'راضی نبودم'],
+                ['#2ecc71', '#1abc9c', '#f1c40f', '#e74c3c']);
+
+            // Staff satisfaction chart
+            createPieChart('staffChart', responses, 'q7',
+                ['کاملاً راضی', 'راضی', 'نسبتاً راضی', 'راضی نبودم'],
+                ['#2ecc71', '#1abc9c', '#f1c40f', '#e74c3c']);
         }
 
         // Create pie chart
